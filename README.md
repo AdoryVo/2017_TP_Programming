@@ -1,2 +1,3 @@
 # 2017_TP_Programming
-2017-2018 Programming
+Adory's 2017-2018 Programming GitHub
+Contains Personal Projects and some School Projects.
