@@ -1,2 +1,2 @@
-# Adory's 2017-18 Programming GitHub
-Contains Personal Projects & School Projects
+# Adory's Personal Programming Projects
+Python, Java, Wolfram
