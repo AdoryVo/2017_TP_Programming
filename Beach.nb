@@ -1,0 +1,32 @@
+rand = RandomReal[{0.4, 0.5}];
+
+leaf = Translate[Rotate[{
+	{Green, Polygon[{{0, 0, 0}, {-1, 2, 1}, {0, 2, 1}, {-0.5, 2.5, 1}, {-1, 2, 1}}]},
+	(* Polygon *)
+	{Green, Polygon[{{-0.5, 2.5, 1}, {0, 2, 1}, {-0.5, 4, 3}, {-1, 2, 1}}]}
+}, 150 Degree, {1, 0, 0}, {0, 0, 0}], {3, 3.5, 3}];
+
+tree = {
+	{Lighter[Brown], Cylinder[{{2.5, 2.5, -1}, {3, 3, 3}}, 0.5]}, (* Cylinder *)
+	Table[Rotate[leaf, deg, {0, 0, 1}, {3, 3, 3}], {deg, 0, 2 Pi, Pi/4}]
+};
+
+
+Graphics3D[{(* made by adory vo *)
+	{Brown, Sphere[]}, (* Sphere *)
+	{Tube[{{0, 0, 0}, {0.5, 0.5, 1}, {1, 1, 1}}]}, (* Tube - straw*)
+	{Cuboid[{-0.05, -0.05, 0}, {0.05, 0.05, 2}]}, (* Cuboid - umbrella shaft *)
+	{Pink, Cone[{{-0.05, -0.05, 1.5}, {0.05, 0.05, 2}}]}, (* Cone *)
+	Table[{PointSize[0.02], RGBColor[1., 1., 0.73], Point[{x, y, rand * Sin[x * y] - 1}]},
+		{x, -2, 10, 0.15}, {y, -2, 10, 0.15}], (* Point *)
+	Table[{PointSize[0.005], Gray, Point[{x, y, rand * Sin[x * y] - 1}]},
+		{x, -2, 10, 0.15}, {y, -2, 10, 0.15}],
+	{Lighter[Brown], Cylinder[{{3.5, 3.5, -1}, {3, 3, 3}}, 0.5]}, (* Cylinder *)
+	Table[Rotate[leaf, deg, {0, 0, 1}, {3, 3, 3}], {deg, 0, 2 Pi, Pi/4}], (* Polygon *)
+	Translate[tree, {5, 5, 0}],
+	Map[Translate[#, {-2, -2, 0}] &,
+		Table[Translate[Rotate[
+			Scale[{Line[{{0, 0, 0}, {1.5, 1.5, 1}, {2, 2, -.5}, {2.5, 2.5, 1}, {4, 4, 0}}]}, 0.5],
+			RandomChoice[Table[x, {x, 0, 2 Pi, Pi/6}]], {0, 0, 2}, {4.25, 4.25, 4}],
+		{RandomChoice[Range[0, 8]], RandomChoice[Range[0, 8]], RandomReal[{4, 6}]}], {r, 0, 5}]](* Line *)
+}, Background → RGBColor[0.5, 0.72, 1], Boxed → False, ImageSize → 500]
